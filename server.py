@@ -128,9 +128,9 @@ def start_server(port=None):
             server.start(settings.TORNADO_SERVER_SETTINGS['subprocess_num'])
         else:
             app.listen(settings.TORNADO_SERVER_SETTINGS['port'], address=settings.TORNADO_SERVER_SETTINGS['ip'])
-        tornado.httpclient.AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient",
-                                                     max_clients=settings.TORNADO_SERVER_SETTINGS[
-                                                         'async_max_http_client'])
+        # tornado.httpclient.AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient",
+        #                                              max_clients=settings.TORNADO_SERVER_SETTINGS[
+        #                                                  'async_max_http_client'])
         tornado.log.app_log.info('start server,listen %s:%s' % (settings.TORNADO_SERVER_SETTINGS['ip'], port))
         tornado.ioloop.IOLoop.current().start()
         tornado.log.app_log.info('finish to shutdown server')
