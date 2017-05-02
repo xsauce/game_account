@@ -1,0 +1,287 @@
+<h1>比赛记录</h1>
+<section>
+    <button type="button" class="btn btn-primary" id="addOneModalBtn" data-target="#addOneModal" data-toggle="modal">
+        添加比赛
+    </button>
+    <button type="button" class="btn btn-primary" id="closeBillBtn" data-target="#closeBillModal" data-toggle="modal">
+        结算
+    </button>
+    <div class="modal fade" id="addOneModal" tabindex="-1" role="dialog" aria-labelledby="addOneModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addOneModalLabel">添加比赛</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" id="submit-error"></div>
+                    <div class="container-fluid">
+                        <form id="addOneForm">
+                            <div class="form-group row">
+                                <label for="game-id-input" class="form-control-label">房间ID</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="game-id-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="score-to-money-rate-input" class="form-control-label">分数金额比</label>
+                                <div class="col-6">
+                                    <input type="text" class="form-control" id="score-to-money-rate-input" value="30"/>
+                                </div>
+                            </div>
+                            <!--<div class="form-group">-->
+                            <!--<label for="message-text" class="form-control-label">记录时间</label>-->
+                            <!--<textarea class="form-control" id="message-text"></textarea>-->
+                            <!--</div>-->
+                            <div class="form-group row">
+                                <label for="player1-id-input" class="form-control-label">玩家1</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="player1-id-input"/>
+                                </div>
+                                <label for="player1-score-input" class="form-control-label">玩家1分数</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="player1-score-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="player2-id-input" class="form-control-label">玩家2</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="player2-id-input"/>
+                                </div>
+                                <label for="player2-score-input" class="form-control-label">玩家2分数</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="player2-score-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="player3-id-input" class="form-control-label">玩家3</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="player3-id-input"/>
+                                </div>
+                                <label for="player3-score-input" class="form-control-label">玩家3分数</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="player3-score-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="player4-id-input" class="form-control-label">玩家4</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="player4-id-input"/>
+                                </div>
+                                <label for="player4-score-input" class="form-control-label">玩家4分数</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="player4-score-input"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="addOneBtn">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br/>
+<section class="row text-center placeholders">
+    <table class="table" id="game-list-table">
+        <thead>
+        <tr>
+            <td>房间ID</td>
+            <td>记录时间</td>
+            <td>分数金额比</td>
+            <td>状态</td>
+            <td>玩家1</td>
+            <td>玩家1分数</td>
+            <td>玩家2</td>
+            <td>玩家2分数</td>
+            <td>玩家3</td>
+            <td>玩家3分数</td>
+            <td>玩家4</td>
+            <td>玩家4分数</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</section>
+
+<div class="modal" id="tip">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">提醒</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="tip-show-text"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="closeBillModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">结算</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="submitCloseBillForm">
+                    <div class="container-fluid">
+                        <div class="form-group row">
+                            <label for="fee-rate-input" class="form-control-label">抽水率</label>
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="fee-rate-input" value="0.05"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="close-bill-check-point-input" class="form-control-label">结算日期</label>
+                            <div class="col-8">
+                                <input type="datetime-local" class="form-control" id="close-bill-check-point-input"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="submitCloseBillBtn">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editOneModal" tabindex="-1" role="dialog" aria-labelledby="editOneModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOneModalLabel">编辑</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" id="e-submit-error"></div>
+                    <div class="container-fluid">
+                        <form id="editOneForm">
+                            <input type="hidden" id="e-game-pkid-input"/>
+                            <div class="form-group row">
+                                <label for="e-game-id-input" class="form-control-label">房间ID</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="e-game-id-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="e-score-to-money-rate-input" class="form-control-label">分数金额比</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="e-score-to-money-rate-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="e-game-finish-datetime-input" class="form-control-label">记录时间</label>
+                                <div class="col-8">
+                                    <input type="datetime-local" class="form-control" id="e-game-finish-datetime-input"/>
+                                </div>
+                            </div>
+                            <!--<div class="form-group row">-->
+                                <!--<label for="e-game-status-input" class="form-control-label">状态</label>-->
+                                <!--<div class="col-8">-->
+                                        <!--<select class="form-control" id="e-game-status-input">-->
+                                          <!--<option value="0">未结算</option>-->
+                                          <!--<option value="1">已结算</option>-->
+                                        <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <div class="form-group row">
+                                <label for="e-player1-id-input" class="form-control-label">玩家1</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="e-player1-id-input"/>
+                                </div>
+                                <label for="e-player1-score-input" class="form-control-label">玩家1分数</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="e-player1-score-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="e-player2-id-input" class="form-control-label">玩家2</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="e-player2-id-input"/>
+                                </div>
+                                <label for="e-player2-score-input" class="form-control-label">玩家2分数</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="e-player2-score-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="e-player3-id-input" class="form-control-label">玩家3</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="e-player3-id-input"/>
+                                </div>
+                                <label for="e-player3-score-input" class="form-control-label">玩家3分数</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="e-player3-score-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="e-player4-id-input" class="form-control-label">玩家4</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="e-player4-id-input"/>
+                                </div>
+                                <label for="e-player4-score-input" class="form-control-label">玩家4分数</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" id="e-player4-score-input"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="editOneBtn">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal" id="delOneModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">删除</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" value="" id="del-game-pkid-input"/>
+                <p>确定删除？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="delOneBtn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/static/game_account/game_list.js"></script>

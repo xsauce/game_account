@@ -1,0 +1,86 @@
+function open_close_bill_detail_modal(detail_data){
+    $("#closeBillHistoryDetailTable tbody").html('');
+    for(var i=0;i<detail_data.length;i++){
+        $("#closeBillHistoryDetailTable tbody").append(
+        "<tr>" +
+        "<td>" + detail_data[i].player_id + "</td>" +
+        "<td>" + detail_data[i].final_money + "</td>" +
+        "<td>" + detail_data[i].money + "</td>" +
+        "<td>" + detail_data[i].game_count + "</td>" +
+        "<td>" + detail_data[i].fee + "</td>" +
+        "</tr>"
+        )
+    }
+    $("#closeBillHistoryDetailModal").modal("show");
+}
+
+
+function show_tip(msg){
+    $("#tip #tip-show-text").html(msg);
+    $("#tip").modal('show');
+}
+
+function del_close_bill_history_modal(history_pkid){
+    $("#del-history-pkid-input").val(history_pkid);
+    $("#delOneModal").modal('show');
+}
+
+function del_one(){
+    req_data = {
+        close_bill_history_pkid: $("#del-history-pkid-input").val()
+    }
+    jQuery.ajax({
+        type: 'POST',
+        url: "del_close_bill_history",
+        dataType: 'json',
+        data: req_data,
+        success: function(data, status){
+            $("#delOneModal").modal('hide');
+            if(data.code != 0){
+                show_tip(data.msg);
+            }
+            else{
+                load_close_bill_history_data();
+            }
+        }
+    });
+}
+
+function load_close_bill_history_data(){
+    jQuery.ajax({
+        type: "GET",
+        url: "close_bill_histories",
+        dataType: "json",
+        success: function(data, status){
+            if(!data.data)return;
+            $("#close-bill-history-table tbody").html('');
+            for(var i=0;i<data.data.length;i++){
+                $("#close-bill-history-table tbody").append(
+                "<tr>" +
+                "<td>" + data.data[i].close_bill_check_point + "</td>" +
+                "<td>" + data.data[i].fee_rate + "</td>" +
+//                "<td>" + data.data[i].total_final_money + "</td>" +
+                "<td>" + data.data[i].total_money + "</td>" +
+                "<td>" + data.data[i].total_fee + "</td>" +
+                "<td>" + data.data[i].total_game_count + "</td>" +
+                "<td><button type='button' class='btn btn-link re-check' data='" + data.data[i].history_pkid + "'>重算</button>" +
+                "<button type='button' class='btn btn-link detail' data='" +  JSON.stringify(data.data[i].items) + "'>详情</button>" +
+                "<button type='button' class='btn btn-link del' data='" + data.data[i].history_pkid + "'>删除</button></td>" +
+                "</tr>");
+            }
+            $("#close-bill-history-table .detail").on('click', function(){
+                open_close_bill_detail_modal(JSON.parse($(this).attr("data")));
+            });
+            $("#close-bill-history-table .del").on('click', function(){
+                del_close_bill_history_modal($(this).attr("data"));
+            })
+        }
+    });
+}
+
+
+
+$(document).ready(function(){
+    load_close_bill_history_data();
+    $("#delOneBtn").on('click', del_one)
+});
