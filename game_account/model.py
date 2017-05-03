@@ -33,7 +33,7 @@ class GameCloseBillHistoryModel(util.base_model.BaseModel):
         super(GameCloseBillHistoryModel, self).__init__()
 
     def get_all_with_detail(self):
-        sql = 'SELECT close_bill_check_point, fee_rate, total_final_money, total_money, total_fee,total_game_count,player_id,final_money,money,game_count,fee,history_pkid FROM {0} h INNER JOIN {1} d on h.pkid=d.history_pkid ORDER BY h.created_at DESC'.format(
+        sql = 'SELECT close_bill_check_point, fee_rate, total_final_money, total_money, total_fee,total_game_count,player_id,final_money,money,game_count,fee,history_pkid FROM {0} h INNER JOIN {1} d on h.pkid=d.history_pkid ORDER BY h.close_bill_check_point DESC'.format(
             self._TABLE, GameCloseBillHistoryDetailModel._TABLE
         )
         return self.query_many_row(sql, None)
