@@ -110,7 +110,7 @@ class CloseBill(object):
                 'fee': row.pop('fee')
             })
             result[hid].update(row)
-        return result.values()
+        return sorted(result.values(), key=lambda x: x['close_bill_check_point'], reverse=True)
 
     def create_one(self, close_bill_check_point, fee_rate):
         fee_rate = float(fee_rate)
