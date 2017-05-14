@@ -6,6 +6,7 @@ from datetime import datetime
 import settings
 import util.base_handler
 from game_account.logic import GameInfo, CloseBill
+from game_account.model import GameCloseBillHistoryModel
 
 
 class GameAccountStaticFileHandler(util.base_handler.BaseStaticFileHandler):
@@ -64,6 +65,13 @@ class GameAccountHandler(util.base_handler.BaseHandler):
         close_bill_history_pkid = self.get_argument_int('close_bill_history_pkid')
         CloseBill().delete_one(close_bill_history_pkid)
         self.output_json()
+
+    def download_close_bill_history_detail_action(self):
+        close_bill_history_pkid = self.get_argument_int('close_bill_history_pkid')
+        history_row = GameCloseBillHistoryModel().where({'pkid': close_bill_history_pkid}).get_one()
+        file = CloseBill().download_history_detail(close_bill_history_pkid)
+        self.output_csv(history_row['close_bill_check_point'].replace(' ', 'T'), file)
+
 
 
 

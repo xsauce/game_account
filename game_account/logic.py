@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import StringIO
+import csv
 from collections import defaultdict, Counter
 
 from game_account.model import GameInfoModel, GameResultModel, GameCloseBillHistoryModel, \
@@ -158,3 +160,13 @@ class CloseBill(object):
             GameCloseBillHistoryDetailModel().delete_by_history_id(close_bill_history_pkid)
             GameCloseBillGameModel().set_status_game_id_by_close_history_pkid(close_bill_history_pkid, 0)
             GameCloseBillGameModel().delete_by_history_pkid(close_bill_history_pkid)
+
+    def download_history_detail(self, close_bill_history_pkid):
+        detail_data = GameCloseBillHistoryDetailModel().where({"history_pkid": close_bill_history_pkid}).get_many()
+        csv_file = StringIO.StringIO()
+        fieldname = ['玩家', '结账金额', '战绩金额', '比赛场次', '手续费']
+        writer = csv.writer(csv_file)
+        writer.writerow(fieldname)
+        for row in detail_data:
+            writer.writerow([row['player_id'].encode('utf8'), row['final_money'], row['money'], row['game_count'], row['fee']])
+        return csv_file

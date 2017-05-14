@@ -285,6 +285,16 @@ class BaseHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "text/html")
         self.write(tornado.template.Loader(self.TEMPLATE_DIR).load(file_name).generate())
 
+    def output_csv(self, file_name, fd, buf_size=1024):
+        self.set_header('Content-Type', 'text/csv')
+        self.set_header('Content-Disposition', 'attachment;filename={0}.csv'.format(file_name))
+        fd.seek(0)
+        while 1:
+            data = fd.read(buf_size)
+            if not data:
+                break
+            self.write(data)
+
 class BaseStaticFileHandler(tornado.web.StaticFileHandler):
     ROUTE = r''
     ROUTE_PARAM = {}

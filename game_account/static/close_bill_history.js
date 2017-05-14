@@ -1,5 +1,7 @@
-function open_close_bill_detail_modal(detail_data){
+function open_close_bill_detail_modal(data){
     $("#closeBillHistoryDetailTable tbody").html('');
+    detail_data = data.items;
+    $("#downloadCloseBillDetail").attr({"data": data.history_pkid});
     for(var i=0;i<detail_data.length;i++){
         $("#closeBillHistoryDetailTable tbody").append(
         "<tr>" +
@@ -64,7 +66,7 @@ function load_close_bill_history_data(){
                 "<td>" + data.data[i].total_fee + "</td>" +
                 "<td>" + data.data[i].total_game_count + "</td>" +
                 "<td><button type='button' class='btn btn-link re-check' data='" + data.data[i].history_pkid + "'>重算</button>" +
-                "<button type='button' class='btn btn-link detail' data='" +  JSON.stringify(data.data[i].items) + "'>详情</button>" +
+                "<button type='button' class='btn btn-link detail' data='" +  JSON.stringify(data.data[i]) + "'>详情</button>" +
                 "<button type='button' class='btn btn-link del' data='" + data.data[i].history_pkid + "'>删除</button></td>" +
                 "</tr>");
             }
@@ -79,8 +81,13 @@ function load_close_bill_history_data(){
 }
 
 
+function download_csv(){
+    history_pkid = $(this).attr("data");
+    window.open('download_close_bill_history_detail?close_bill_history_pkid=' + history_pkid, '_blank');
+}
 
 $(document).ready(function(){
     load_close_bill_history_data();
     $("#delOneBtn").on('click', del_one)
+    $("#downloadCloseBillDetail").on('click', download_csv)
 });
