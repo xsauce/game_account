@@ -19,7 +19,7 @@ import psutil
 import base64
 import settings
 import hashlib
-import pytz
+# import pytz
 from dateutil.parser import parse as timezone_parse
 
 
