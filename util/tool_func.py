@@ -14,13 +14,13 @@ import math
 
 import decimal
 import psutil
-from Crypto.Cipher import AES
-from Crypto import Random
+# from Crypto.Cipher import AES
+# from Crypto import Random
 import base64
 import settings
 import hashlib
-import pytz
-from dateutil.parser import parse as timezone_parse
+# import pytz
+# from dateutil.parser import parse as timezone_parse
 
 
 class ShortUUID:
@@ -174,29 +174,29 @@ def camel_to_pythonist(word):
 
 
 
-class AESCipher:
-    BS = 16
-
-    @staticmethod
-    def get_default():
-        return AESCipher(settings.AESKEY)
-
-    def __init__(self, key):
-        self.key = key
-
-    def encrypt(self, raw):
-        pad = lambda s: s + (self.BS - len(s) % self.BS) * chr(self.BS - len(s) % self.BS)
-        raw = pad(raw)
-        iv = Random.new().read(AES.block_size)
-        cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return base64.b64encode(iv + cipher.encrypt(raw))
-
-    def decrypt(self, enc):
-        unpad = lambda s: s[:-ord(s[len(s) - 1:])]
-        enc = base64.b64decode(enc)
-        iv = enc[:16]
-        cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        return unpad(cipher.decrypt(enc[16:]))
+# class AESCipher:
+#     BS = 16
+#
+#     @staticmethod
+#     def get_default():
+#         return AESCipher(settings.AESKEY)
+#
+#     def __init__(self, key):
+#         self.key = key
+#
+#     def encrypt(self, raw):
+#         pad = lambda s: s + (self.BS - len(s) % self.BS) * chr(self.BS - len(s) % self.BS)
+#         raw = pad(raw)
+#         iv = Random.new().read(AES.block_size)
+#         cipher = AES.new(self.key, AES.MODE_CBC, iv)
+#         return base64.b64encode(iv + cipher.encrypt(raw))
+#
+#     def decrypt(self, enc):
+#         unpad = lambda s: s[:-ord(s[len(s) - 1:])]
+#         enc = base64.b64decode(enc)
+#         iv = enc[:16]
+#         cipher = AES.new(self.key, AES.MODE_CBC, iv)
+#         return unpad(cipher.decrypt(enc[16:]))
 
 def md5(text):
     m = hashlib.md5()
@@ -259,11 +259,11 @@ def id_card_15to18(id_card_15):
     id_card_18 += v[tmp_t % 11]
     return id_card_18
 
-def to_utc8_timestr(timestr):
-    """ 将带时区的时间字符串 转出 不带时区的东八区时间字符串
-    """
-    tz = pytz.timezone('Asia/Shanghai')
-    return datetime.datetime.strftime(timezone_parse(timestr).astimezone(tz), '%Y-%m-%d %H:%M:%S')
+# def to_utc8_timestr(timestr):
+#     """ 将带时区的时间字符串 转出 不带时区的东八区时间字符串
+#     """
+#     tz = pytz.timezone('Asia/Shanghai')
+#     return datetime.datetime.strftime(timezone_parse(timestr).astimezone(tz), '%Y-%m-%d %H:%M:%S')
 
 
 def validate_id_card(id_card):
