@@ -259,11 +259,11 @@ def id_card_15to18(id_card_15):
     id_card_18 += v[tmp_t % 11]
     return id_card_18
 
-def to_utc8_timestr(timestr):
-    """ 将带时区的时间字符串 转出 不带时区的东八区时间字符串
-    """
-    tz = pytz.timezone('Asia/Shanghai')
-    return datetime.datetime.strftime(timezone_parse(timestr).astimezone(tz), '%Y-%m-%d %H:%M:%S')
+# def to_utc8_timestr(timestr):
+#     """ 将带时区的时间字符串 转出 不带时区的东八区时间字符串
+#     """
+#     tz = pytz.timezone('Asia/Shanghai')
+#     return datetime.datetime.strftime(timezone_parse(timestr).astimezone(tz), '%Y-%m-%d %H:%M:%S')
 
 
 def validate_id_card(id_card):
