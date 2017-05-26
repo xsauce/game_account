@@ -1,3 +1,5 @@
+{% extends 'index.html' %}
+{% block content %}
 <h1>结算记录</h1>
 <section class="row text-center placeholders">
     <table class="table" id="close-bill-history-table">
@@ -89,6 +91,10 @@
         </div>
     </div>
 </div>
+{% end %}
 
+{% block nav_btn %}close-bill-history-btn{% end %}
 
+{% block footer %}
 <script type="text/javascript" src="/static/game_account/close_bill_history.js?v=3"></script>
+{% end %}

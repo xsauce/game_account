@@ -281,9 +281,9 @@ class BaseHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", "application/json")
         self.write(tool_func.dict_to_jsonstr(collections.OrderedDict([('code', code), ('msg', msg), ('data', data),('debug', debug)])))
 
-    def output_template(self, file_name):
+    def output_template(self, file_name, **kwargs):
         self.set_header("Content-Type", "text/html")
-        self.write(tornado.template.Loader(self.TEMPLATE_DIR).load(file_name).generate())
+        self.write(tornado.template.Loader(self.TEMPLATE_DIR).load(file_name).generate(**kwargs))
 
     def output_csv(self, file_name, fd, buf_size=1024):
         self.set_header('Content-Type', 'text/csv')

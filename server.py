@@ -4,12 +4,11 @@ import logging
 import logging.handlers
 import sys
 import traceback
-
-import game_account.handler
-from util import base_handler
-
 sys.path.append('/usr/local/game_account/')
 from util.base_handler import WorkingRequestCounter
+import game_account.handler
+import login.handler
+from util import base_handler
 import os
 import functools
 import signal
@@ -32,7 +31,8 @@ def get_url_routes():
     ur = []
     handlers = [
         game_account.handler,
-        base_handler
+        base_handler,
+        login.handler
     ]
     for handler in handlers:
         for i in dir(handler):

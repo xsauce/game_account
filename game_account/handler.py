@@ -7,6 +7,8 @@ import settings
 import util.base_handler
 from game_account.logic import GameInfo, CloseBill
 from game_account.model import GameCloseBillHistoryModel
+from login.model import SessionModel
+from util.pt_tornado_logging import PTTornadoLogger
 
 
 class GameAccountStaticFileHandler(util.base_handler.BaseStaticFileHandler):
@@ -18,6 +20,17 @@ class GameAccountHandler(util.base_handler.BaseHandler):
     TEMPLATE_DIR = os.path.join(settings.ROOT_DIR, 'game_account', 'template')
     def __init__(self, *args, **kwargs):
         super(GameAccountHandler, self).__init__(*args, **kwargs)
+
+    def prepare(self):
+        super(GameAccountHandler, self).prepare()
+        token = self.get_secure_cookie('token', None)
+        PTTornadoLogger().info('token:%s' % token)
+        if token is None:
+            self.redirect('/login/index')
+        else:
+            expired_point = SessionModel().select_field(['expired_point']).where({'session_key': token}).get_one(dict_result_bool=False)[0]
+            if expired_point <= datetime.now():
+                self.redirect('/login/index')
 
     def index_action(self):
         self.output_template('index.html')

@@ -42,44 +42,21 @@
     <div class="container-fluid">
       <div class="row">
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-faded sidebar">
-          <ul class="nav nav-pills flex-column" id="nav-ul-btn">
+          <ul class="nav nav-pills flex-column" id="navUlBtn">
             <li class="nav-item">
-              <a class="nav-link active" href="#">概览</a>
+              <a class="nav-link" href="#">概览</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#game-list" id="game-list-btn">比赛记录</a>
+              <a class="nav-link" href="game_list" id="game-list-btn">比赛记录</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#close-bill-history" id="close-bill-history-btn">结算记录</a>
+              <a class="nav-link" href="close_bill_history" id="close-bill-history-btn">结算记录</a>
             </li>
           </ul>
         </nav>
 
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main-container">
-          <h1>Dashboard</h1>
-
-          <section class="row text-center placeholders">
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <div class="text-muted">Something else</div>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-6 col-sm-3 placeholder">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" class="img-fluid rounded-circle" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </section>
+          {% block content %}{% end %}
         </main>
       </div>
     </div>
@@ -89,5 +66,10 @@
     <script src="/static/game_account/bootstrap.min.js"></script>
     <script src="/static/game_account/ie10-viewport-bug-workaround.js"></script>
     <script src="/static/game_account/index.js"></script>
+      <script type="text/javascript">
+        $("#navUlBtn li").removeClass("active");
+        $("#{% block nav_btn %}{% end %}").addClass("active");
+      </script>
+    {% block footer %}{% end %}
   </body>
 </html>

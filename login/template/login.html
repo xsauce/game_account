@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>大门</title>
+</head>
+<body>
+<div style="margin: 0 auto; width:100%;text-align:center">
+<form action="login" method="post">
+    <p>
+        <label>邮箱</label>
+        <input name="username" type="email" value=""/>
+    </p>
+    <p>
+        <label>密码</label>
+        <input name="password" type="password" value=""/>
+    </p>
+    <p>
+        <input type="submit" value="登录"/>
+    </p>
+    {% if err %}
+    <p style="color:red;">{{ err }}</p>
+    {% end %}
+</form>
+</div>
+
+</body>
+</html>
