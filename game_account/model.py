@@ -13,6 +13,12 @@ class GameInfoModel(util.base_model.BaseModel):
         )
         return self.query_many_row(sql, None)
 
+    def get_data_by_date_with_result(self, start_dt, end_dt):
+        sql = 'SELECT g.pkid, g.game_id, g.game_finish_datetime, g.score_to_money_rate, g.game_status, p.player_id, p.player_score FROM {0} g INNER JOIN {1} p on p.game_pkid=g.pkid WHERE g.created_at >=%s and g.created_at <=%s ORDER BY g.created_at DESC'.format(
+            self._TABLE, GameResultModel._TABLE
+        )
+        return self.query_many_row(sql, (start_dt, end_dt))
+
     def delete_one(self, pkid):
         sql = 'DELETE FROM {0} WHERE pkid=%s'.format(self._TABLE)
         self.execute(sql, (pkid,))

@@ -8,14 +8,50 @@ function open_close_bill_detail_modal(data){
         "<td>" + detail_data[i].player_id + "</td>" +
         "<td>" + detail_data[i].final_money + "</td>" +
         "<td>" + detail_data[i].money + "</td>" +
-        "<td>" + detail_data[i].game_count + "</td>" +
+        "<td><button type='button' class='btn btn-link' onclick='get_close_bill_history_player_detail(\"" + detail_data[i].player_id + "\", \"" + data.history_pkid + "\");'>" + detail_data[i].game_count + "</button></td>" +
         "<td>" + detail_data[i].fee + "</td>" +
         "</tr>"
-        )
+        );
     }
     $("#closeBillHistoryDetailModal").modal("show");
 }
 
+
+function get_close_bill_history_player_detail(player_id, history_pkid){
+    show_tip("正在读取...");
+    jQuery.ajax({
+        type: 'POST',
+        url: "close_bill_history_player_detail",
+        data: {
+            player_id: player_id,
+            close_bill_history_pkid: history_pkid
+        },
+        dataType: 'json',
+        success: function(data, status){
+            $("#tip").modal('hide');
+            if(data.code != 0){
+                show_tip(data.msg);
+            }
+            else{
+            $("#closeBillHistoryPlayerDetailTable tbody").empty();
+            for(var i=0;i<data.data.length;i++){
+                $("#closeBillHistoryPlayerDetailTable tbody").append(
+                "<tr>" +
+                "<td>" + data.data[i].game_id + "</td>" +
+                "<td>" + data.data[i].player_score + "</td>" +
+                "<td>" + data.data[i].final_money + "</td>" +
+                "<td>" + data.data[i].money + "</td>" +
+                "<td>" + data.data[i].fee + "</td>" +
+                "</tr>"
+                );
+            }
+            $("#closeBillHistoryPlayerDetailModal").modal("show");
+
+            }
+
+        }
+    });
+}
 
 function show_tip(msg){
     $("#tip #tip-show-text").html(msg);

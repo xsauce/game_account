@@ -1,7 +1,20 @@
 function load_game_data(){
+
+    if(!$("#datetimeRange").val()){
+        start_dt = format_dt_1(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000)).split(' ')[0] + ' 00:00:00';
+        end_dt = format_dt_1(new Date()).split(' ')[0] + ' 23:59:59';
+    }else{
+        date_range_val = $("#datetimeRange").val().split(" - ");
+        start_dt = date_range_val[0];
+        end_dt = date_range_val[1];
+    }
     jQuery.ajax({
-        type: "GET",
-        url: "games",
+        type: "POST",
+        url: "games_by_date",
+        data: {
+            start_dt: start_dt,
+            end_dt: end_dt,
+        },
         dataType: "json",
         success: function(data, status){
             $("#game-list-table tbody").html('');
@@ -175,11 +188,26 @@ function show_tip(msg){
     $("#tip").modal('show');
 }
 
-function get_now(){
-    var d = new Date();
+function format_dt(d){
     var datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2)
      + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
     return datestring;
+}
+
+
+function format_dt_1(d){
+    var datestring = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2)
+     + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+    return datestring;
+}
+
+function get_now(){
+    return format_dt(new Date())
+}
+
+function get_add_day(d, days) {
+    var date = new Date(d.getTime() + days * 24 * 60 * 60 * 1000);
+    return format_dt(date);
 }
 
 function show_close_bill_modal(){
@@ -203,5 +231,16 @@ $(document).ready(function(){
 
     $("#closeBillModal").on('show.bs.modal', function(e){
         show_close_bill_modal();
+    });
+
+    $("#datetimeRange").daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 30,
+        "timePicker24Hour": true,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm:ss'
+        },
+        "startDate": format_dt_1(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000)).split(' ')[0] + ' 00:00:00',
+        "endDate": format_dt_1(new Date()).split(' ')[0] + ' 23:59:59'
     });
 });

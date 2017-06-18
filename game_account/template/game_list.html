@@ -2,12 +2,22 @@
 {% block content %}
 <h1>比赛记录</h1>
 <section>
-    <button type="button" class="btn btn-primary" id="addOneModalBtn" data-target="#addOneModal" data-toggle="modal">
-        添加比赛
-    </button>
-    <button type="button" class="btn btn-primary" id="closeBillBtn" data-target="#closeBillModal" data-toggle="modal">
-        结算
-    </button>
+    <div class="row">
+        <div class="col-md-1">
+        <button type="button" class="btn btn-primary" id="addOneModalBtn" data-target="#addOneModal" data-toggle="modal">
+            添加比赛
+        </button>
+        </div>
+        <div class="col-md-1">
+        <button type="button" class="btn btn-primary" id="closeBillBtn" data-target="#closeBillModal" data-toggle="modal">
+            结算
+        </button>
+        </div>
+        <div class="col-md-4">
+        <input type="text" id="datetimeRange" class="form-control"/>
+        </div>
+    </div>
+
     <div class="modal fade" id="addOneModal" tabindex="-1" role="dialog" aria-labelledby="addOneModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">

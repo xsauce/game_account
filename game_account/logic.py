@@ -16,6 +16,31 @@ class GameInfo(object):
     def list_by_pagination(self, page_index=0, page_size=10):
         pass
 
+    def get_data_by_date(self, start_dt, end_dt):
+        db_result = GameInfoModel().get_data_by_date_with_result(start_dt, end_dt)
+        result = []
+        if len(db_result) == 0:
+            return result
+        db_result = sorted(db_result, key=lambda x: x['game_id'])
+        for index, row in enumerate(db_result):
+            if index % 4 == 0:
+                result.append({
+                    'game_pkid': row['pkid'],
+                    'game_id': row['game_id'],
+                    'game_finish_datetime': row['game_finish_datetime'],
+                    'score_to_money_rate': row['score_to_money_rate'],
+                    'game_status': row['game_status'],
+                    'player1_id': row['player_id'],
+                    'player1_score': row['player_score'],
+                    'player2_id': db_result[index + 1]['player_id'],
+                    'player2_score': db_result[index + 1]['player_score'],
+                    'player3_id': db_result[index + 2]['player_id'],
+                    'player3_score': db_result[index + 2]['player_score'],
+                    'player4_id': db_result[index + 3]['player_id'],
+                    'player4_score': db_result[index + 3]['player_score'],
+                })
+        return sorted(result, key=lambda x: (-1 * x['game_status'], x['game_finish_datetime']), reverse=True)
+
     def get_all(self):
         db_result = GameInfoModel().get_all_with_result()
         result = []
@@ -114,24 +139,38 @@ class CloseBill(object):
 
     def create_one(self, close_bill_check_point, fee_rate):
         fee_rate = float(fee_rate)
-        game_list = GameInfoModel().select_field(['pkid', 'game_finish_datetime', 'score_to_money_rate']).where({'game_status': 0}).get_many()
+        game_list = GameInfoModel().select_field(['game_id', 'pkid', 'game_finish_datetime', 'score_to_money_rate']).where({'game_status': 0}).get_many()
         if len(game_list) == 0:
             raise NormalError(output_message=u'没有比赛需要结算')
         player_money = defaultdict(Counter)
+        player_game_detail_row = []
         for game in game_list:
             result_list = GameResultModel().select_field(['player_id', 'player_score']).where({'game_pkid': game['pkid']}).get_many()
             for result in result_list:
-                player_money[result['player_id']]['money'] += result['player_score'] * game['score_to_money_rate']
+                tmp_money = result['player_score'] * game['score_to_money_rate']
+                player_money[result['player_id']]['money'] += tmp_money
 
                 if result['player_score'] > 5:
-                    tmp_fee = min(200, result['player_score'] * game['score_to_money_rate'] * fee_rate * 1.0)
-                    player_money[result['player_id']]['final_money'] += result['player_score'] * game['score_to_money_rate'] - tmp_fee
-                    player_money[result['player_id']]['fee'] += tmp_fee
+                    tmp_fee = min(200, tmp_money * fee_rate * 1.0)
+                    tmp_final_money = tmp_money - tmp_fee
                 else:
-                    player_money[result['player_id']]['final_money'] += result['player_score'] * game['score_to_money_rate'] * 1.0
-                    player_money[result['player_id']]['fee'] += 0.0
+                    tmp_fee = 0.0
+                    tmp_final_money = tmp_money * 1.0
 
+                player_money[result['player_id']]['final_money'] += tmp_final_money
+                player_money[result['player_id']]['fee'] += tmp_fee
+
+                player_game_detail_row.append({
+                    'player_id': result['player_id'],
+                    'player_score': result['player_score'],
+                    'money': tmp_money,
+                    'final_money': tmp_final_money,
+                    'fee': tmp_fee,
+                    'game_pkid': game['pkid'],
+                    'game_id': game['game_id']
+                })
                 player_money[result['player_id']]['game_count'] += 1
+
         with transaction_context:
             pkid = GameCloseBillHistoryModel().insert_one_row({
                 'close_bill_check_point': close_bill_check_point,
@@ -141,7 +180,9 @@ class CloseBill(object):
                 'total_fee': sum([pm['fee'] for pm in player_money.values()]),
                 'total_game_count': len(game_list)
             })
-            GameCloseBillGameModel().insert_many_row([{'history_pkid': pkid, 'game_pkid': g['pkid']} for g in game_list])
+            for i in player_game_detail_row:
+                i['history_pkid'] = pkid
+            GameCloseBillGameModel().insert_many_row(player_game_detail_row)
             for k, v in player_money.items():
                 GameCloseBillHistoryDetailModel().insert_one_row({
                     'player_id': k,
@@ -170,3 +211,8 @@ class CloseBill(object):
         for row in detail_data:
             writer.writerow([row['player_id'].encode('utf8'), row['final_money'], row['money'], row['game_count'], row['fee']])
         return csv_file
+
+    def get_close_bill_history_player_detail(self, player_id, history_pkid):
+        return GameCloseBillGameModel().select_field(['player_id', 'game_id', 'game_pkid', 'final_money', 'money', 'fee', 'player_score']).where({'player_id': player_id, 'history_pkid': history_pkid}).get_many()
+
+

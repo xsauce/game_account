@@ -41,6 +41,11 @@ class GameAccountHandler(util.base_handler.BaseHandler):
     def games_action(self):
         self.output_json(data=GameInfo().get_all())
 
+    def games_by_date_action(self):
+        start_dt = self.get_argument_datetime('start_dt')
+        end_dt = self.get_argument_datetime('end_dt')
+        self.output_json(data=GameInfo().get_data_by_date(start_dt, end_dt))
+
     def add_game_action(self):
         json_body = json.loads(self.request.body)
         GameInfo().create_one(json_body['game_id'], json_body['score_to_money_rate'], json_body['result'])
@@ -84,6 +89,13 @@ class GameAccountHandler(util.base_handler.BaseHandler):
         history_row = GameCloseBillHistoryModel().where({'pkid': close_bill_history_pkid}).get_one()
         file = CloseBill().download_history_detail(close_bill_history_pkid)
         self.output_csv(history_row['close_bill_check_point'].replace(' ', 'T'), file)
+
+    def close_bill_history_player_detail_action(self):
+        player_id = self.get_argument('player_id')
+        close_bill_history_pkid = self.get_argument_int('close_bill_history_pkid')
+        data = CloseBill().get_close_bill_history_player_detail(player_id, close_bill_history_pkid)
+        self.output_json(data=data)
+
 
 
 
