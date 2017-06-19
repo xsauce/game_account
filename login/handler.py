@@ -11,7 +11,9 @@ from util.tool_func import md5
 
 class LoginHandler(BaseHandler):
     ROUTE = '/login/(.*)'
-    TEMPLATE_DIR = os.path.join(settings.ROOT_DIR, 'login', 'template')
+
+    def get_template_path(self):
+        return os.path.join(settings.ROOT_DIR, 'login', 'template')
 
     def index_action(self):
         self.output_template('login.html', err='')

@@ -283,7 +283,8 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def output_template(self, file_name, **kwargs):
         self.set_header("Content-Type", "text/html")
-        self.write(tornado.template.Loader(self.TEMPLATE_DIR).load(file_name).generate(**kwargs))
+        self.render(file_name, **kwargs)
+        # self.write(tornado.template.Loader(self.TEMPLATE_DIR).load(file_name).generate(**kwargs))
 
     def output_csv(self, file_name, fd, buf_size=1024):
         self.set_header('Content-Type', 'text/csv')

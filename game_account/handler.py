@@ -11,9 +11,9 @@ from login.model import SessionModel
 from util.pt_tornado_logging import PTTornadoLogger
 
 
-class GameAccountStaticFileHandler(util.base_handler.BaseStaticFileHandler):
-    ROUTE = r'/static/game_account/(.*)'
-    ROUTE_PARAM = dict(path=os.path.join(settings.ROOT_DIR, 'game_account', 'static'))
+# class GameAccountStaticFileHandler(util.base_handler.BaseStaticFileHandler):
+#     ROUTE = r'/static/game_account/(.*)'
+#     ROUTE_PARAM = dict(path=os.path.join(settings.ROOT_DIR, 'game_account', 'static'))
 
 class GameAccountHandler(util.base_handler.BaseHandler):
     ROUTE = r'/game_account/(.*)'
@@ -31,6 +31,9 @@ class GameAccountHandler(util.base_handler.BaseHandler):
             expired_point = SessionModel().select_field(['expired_point']).where({'session_key': token}).get_one(dict_result_bool=False)[0]
             if expired_point <= datetime.now():
                 self.redirect('/login/index')
+
+    def get_template_path(self):
+        return os.path.join(settings.ROOT_DIR, 'game_account', 'template')
 
     def index_action(self):
         self.output_template('index.html')

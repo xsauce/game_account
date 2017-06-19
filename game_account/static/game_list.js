@@ -1,13 +1,15 @@
-function load_game_data(){
-
-    if(!$("#datetimeRange").val()){
-        start_dt = format_dt_1(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000)).split(' ')[0] + ' 00:00:00';
-        end_dt = format_dt_1(new Date()).split(' ')[0] + ' 23:59:59';
-    }else{
-        date_range_val = $("#datetimeRange").val().split(" - ");
-        start_dt = date_range_val[0];
-        end_dt = date_range_val[1];
+function load_game_data(start_dt, end_dt){
+    if(!start_dt && !end_dt){
+        if(!$("#datetimeRange").val()){
+            start_dt = format_dt_1(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000)).split(' ')[0] + ' 00:00:00';
+            end_dt = format_dt_1(new Date()).split(' ')[0] + ' 23:59:59';
+        }else{
+            date_range_val = $("#datetimeRange").val().split(" - ");
+            start_dt = date_range_val[0];
+            end_dt = date_range_val[1];
+        }
     }
+
     jQuery.ajax({
         type: "POST",
         url: "games_by_date",
@@ -242,5 +244,7 @@ $(document).ready(function(){
         },
         "startDate": format_dt_1(new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000)).split(' ')[0] + ' 00:00:00',
         "endDate": format_dt_1(new Date()).split(' ')[0] + ' 23:59:59'
+    }, function(st, et, label){
+        load_game_data(st.format('YYYY-MM-DD HH:mm:ss'), et.format('YYYY-MM-DD HH:mm:ss'));
     });
 });
