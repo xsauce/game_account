@@ -15,6 +15,7 @@ class RspCode:
     SYS_ERROR = 200
     WRONG_THIRD_RESPONSE_ERROR = 201
     THIRD_PARTY_ERROR = 300
+    REDIRECT = 400
 
     def __init__(self):
         pass

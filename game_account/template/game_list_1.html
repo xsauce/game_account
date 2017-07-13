@@ -1,6 +1,5 @@
 {% extends 'layout.html' %} {% block content %}
-<link rel="stylesheet" type="text/css" href="{{ static_url('game_list.css')}}" />
-<h3>游戏记录</h3>
+<h1>游戏记录</h1>
 <section>
   <div class="row">
     <div class="col-md-1">
@@ -47,18 +46,46 @@
               <!--<label for="message-text" class="form-control-label">记录时间</label>-->
               <!--<textarea class="form-control" id="message-text"></textarea>-->
               <!--</div>-->
-              {% for i in range(1, most_player_count + 1) %}
               <div class="form-group row">
-                <label for="player{{ i }}-id-input" class="form-control-label">玩家{{ i }}</label>
+                <label for="player1-id-input" class="form-control-label">玩家1</label>
                 <div class="col-4">
-                  <input type="text" class="form-control player-id-input" id="player{{ i }}-id-input" />
+                  <input type="text" class="form-control" id="player1-id-input" />
                 </div>
-                <label for="player{{ i }}-score-input" class="form-control-label">玩家{{ i }}分数</label>
+                <label for="player1-score-input" class="form-control-label">玩家1分数</label>
                 <div class="col-4">
-                  <input type="text" class="form-control" id="player{{ i }}-score-input" />
+                  <input type="text" class="form-control" id="player1-score-input" />
                 </div>
               </div>
-              {% end %}
+              <div class="form-group row">
+                <label for="player2-id-input" class="form-control-label">玩家2</label>
+                <div class="col-4">
+                  <input type="text" class="form-control" id="player2-id-input" />
+                </div>
+                <label for="player2-score-input" class="form-control-label">玩家2分数</label>
+                <div class="col-4">
+                  <input type="text" class="form-control" id="player2-score-input" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="player3-id-input" class="form-control-label">玩家3</label>
+                <div class="col-4">
+                  <input type="text" class="form-control" id="player3-id-input" />
+                </div>
+                <label for="player3-score-input" class="form-control-label">玩家3分数</label>
+                <div class="col-4">
+                  <input type="text" class="form-control" id="player3-score-input" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="player4-id-input" class="form-control-label">玩家4</label>
+                <div class="col-4">
+                  <input type="text" class="form-control" id="player4-id-input" />
+                </div>
+                <label for="player4-score-input" class="form-control-label">玩家4分数</label>
+                <div class="col-4">
+                  <input type="text" class="form-control" id="player4-score-input" />
+                </div>
+              </div>
             </form>
           </div>
         </div>
@@ -79,7 +106,14 @@
         <td>记录时间</td>
         <td>分数金额比</td>
         <td>状态</td>
-        <td>游戏结果</td>
+        <td>玩家1</td>
+        <td>玩家1分数</td>
+        <td>玩家2</td>
+        <td>玩家2分数</td>
+        <td>玩家3</td>
+        <td>玩家3分数</td>
+        <td>玩家4</td>
+        <td>玩家4分数</td>
         <td>操作</td>
       </tr>
     </thead>
@@ -185,18 +219,47 @@
             <!--</select>-->
             <!--</div>-->
             <!--</div>-->
-            {% for i in range(1, most_player_count + 1) %}
+
             <div class="form-group row">
-              <label for="e-player{{ i }}-id-input" class="form-control-label">玩家{{ i }}</label>
+              <label for="e-player1-id-input" class="form-control-label">玩家1</label>
               <div class="col-4">
-                <input type="text" class="form-control e-player-id-input" id="e-player{{ i }}-id-input" />
+                <input type="text" class="form-control" id="e-player1-id-input" />
               </div>
-              <label for="e-player{{ i }}-score-input" class="form-control-label">玩家{{ i }}分数</label>
+              <label for="e-player1-score-input" class="form-control-label">玩家1分数</label>
               <div class="col-4">
-                <input type="text" class="form-control" id="e-player{{ i }}-score-input" />
+                <input type="text" class="form-control" id="e-player1-score-input" />
               </div>
             </div>
-            {% end %}
+            <div class="form-group row">
+              <label for="e-player2-id-input" class="form-control-label">玩家2</label>
+              <div class="col-4">
+                <input type="text" class="form-control" id="e-player2-id-input" />
+              </div>
+              <label for="e-player2-score-input" class="form-control-label">玩家2分数</label>
+              <div class="col-4">
+                <input type="text" class="form-control" id="e-player2-score-input" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="e-player3-id-input" class="form-control-label">玩家3</label>
+              <div class="col-4">
+                <input type="text" class="form-control" id="e-player3-id-input" />
+              </div>
+              <label for="e-player3-score-input" class="form-control-label">玩家3分数</label>
+              <div class="col-4">
+                <input type="text" class="form-control" id="e-player3-score-input" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="e-player4-id-input" class="form-control-label">玩家4</label>
+              <div class="col-4">
+                <input type="text" class="form-control" id="e-player4-id-input" />
+              </div>
+              <label for="e-player4-score-input" class="form-control-label">玩家4分数</label>
+              <div class="col-4">
+                <input type="text" class="form-control" id="e-player4-score-input" />
+              </div>
+            </div>
           </form>
         </div>
       </div>

@@ -1,131 +1,134 @@
-{% extends 'index.html' %}
-{% block content %}
-<h1>结算记录</h1>
-<section class="row text-center placeholders">
-    <table class="table" id="close-bill-history-table">
-        <thead>
-        <tr>
-            <td>结算日期</td>
-            <td>手续费率</td>
-            <!--<td>结账总额</td>-->
-            <td>战绩总额</td>
-            <td>手续费总和</td>
-            <td>比赛场数</td>
-            <td>操作</td>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+{% extends 'layout.html' %} {% block content %}
+<h3>结算记录</h3>
+<section>
+  <div class="row">
+    <div class="col-md-1">
+      结算时间:
+    </div>
+    <div class="col-md-4">
+      <input type="text" id="datetimeRange" class="form-control" />
+    </div>
+  </div>
+  <table class="table" id="close-bill-history-table">
+    <thead>
+      <tr>
+        <td>结算日期</td>
+        <td>手续费率</td>
+        <!--<td>结账总额</td>-->
+        <td>战绩总额</td>
+        <td>手续费总和</td>
+        <td>比赛场数</td>
+        <td>操作</td>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </section>
 
 <div class="modal" id="closeBillHistoryDetailModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">详情</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">详情</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                <table class="table" id="closeBillHistoryDetailTable">
-                    <thead>
-                    <tr>
-                        <td>玩家ID</td>
-                        <td>结账金额</td>
-                        <td>战绩金额</td>
-                        <td>比赛场次</td>
-                        <td>手续费</td>
-                    </tr>
-                    </thead>
-                    <tbody></tbody>
+      </div>
+      <div class="modal-body">
+        <table class="table" id="closeBillHistoryDetailTable">
+          <thead>
+            <tr>
+              <td>玩家ID</td>
+              <td>结账金额</td>
+              <td>战绩金额</td>
+              <td>比赛场次</td>
+              <td>手续费</td>
+            </tr>
+          </thead>
+          <tbody></tbody>
 
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="downloadCloseBillDetail">下载</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="downloadCloseBillDetail">下载</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
     </div>
+  </div>
 </div>
 
 
 <div class="modal" id="closeBillHistoryPlayerDetailModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">详情</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">详情</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                <table class="table" id="closeBillHistoryPlayerDetailTable">
-                    <thead>
-                    <tr>
-                        <td>房间ID</td>
-                        <td>分数</td>
-                        <td>结账金额</td>
-                        <td>战绩金额</td>
-                        <td>手续费</td>
-                    </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
+      </div>
+      <div class="modal-body">
+        <table class="table" id="closeBillHistoryPlayerDetailTable">
+          <thead>
+            <tr>
+              <td>房间ID</td>
+              <td>分数</td>
+              <td>结账金额</td>
+              <td>战绩金额</td>
+              <td>手续费</td>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
     </div>
+  </div>
 </div>
 
 
 <div class="modal" id="delOneModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">删除</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">删除</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" value="" id="del-history-pkid-input"/>
-                <p>确定删除？</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="delOneBtn">确定</button>
-            </div>
-        </div>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" value="" id="del-history-pkid-input" />
+        <p>确定删除？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="delOneBtn">确定</button>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="modal" id="tip">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">提醒</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">提醒</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                <p id="tip-show-text"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
+      </div>
+      <div class="modal-body">
+        <p id="tip-show-text"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
     </div>
+  </div>
 </div>
-{% end %}
-
-{% block nav_btn %}close-bill-history-btn{% end %}
-
-{% block footer %}
+{% end %} {% block nav_btn %}close-bill-history-{{game_type_pkid}}{% end %} {% block footer %}
 <script type="text/javascript" src="{{ static_url('close_bill_history.js') }}"></script>
 {% end %}

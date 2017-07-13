@@ -1,0 +1,11 @@
+.ul-no-point li{
+  list-style-type: none;
+}
+
+.ul-square li{
+  list-style-type: square;
+}
+
+.borderless td, .borderless th {
+    border: none;
+}

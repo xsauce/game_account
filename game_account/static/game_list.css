@@ -1,0 +1,10 @@
+.game-result-inner-table td {
+  padding: 0.1em;
+  border: none;
+  width: 100%;
+}
+
+.p-td{
+  padding: 0.2em;
+  margin: 0em;
+}

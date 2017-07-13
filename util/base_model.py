@@ -18,8 +18,8 @@ class BaseModel(object):
     Example see test/sql_helper_test.py
     '''
 
-    TABLE = ''
-    UNIQUE_KEY_LIST = []
+    _TABLE = ''
+    _UNIQUE_KEY_LIST = []
     DATABASE = 'game_account'
     DEFAULT_DATETIME = datetime.datetime(1970, 1, 1)
 

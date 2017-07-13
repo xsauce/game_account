@@ -1,28 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>大门</title>
-</head>
-<body>
-<div style="margin: 0 auto; width:100%;text-align:center">
-<form action="login" method="post">
-    <p>
-        <label>邮箱</label>
-        <input name="username" type="email" value=""/>
-    </p>
-    <p>
-        <label>密码</label>
-        <input name="password" type="password" value=""/>
-    </p>
-    <p>
-        <input type="submit" value="登录"/>
-    </p>
-    {% if err %}
-    <p style="color:red;">{{ err }}</p>
-    {% end %}
-</form>
-</div>
+<html lang="zh">
 
+<head>
+  <meta charset="UTF-8">
+  <title>游戏数据管理平台</title>
+  <link href="{{ static_url('bootstrap-3.3.7.min.css') }}" rel="stylesheet" />
+  <style>
+    body {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: #eee;
+    }
+
+    .form-signin {
+      max-width: 330px;
+      padding: 15px;
+      margin: 0 auto;
+    }
+
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+      margin-bottom: 10px;
+    }
+
+    .form-signin .checkbox {
+      font-weight: normal;
+    }
+
+    .form-signin .form-control {
+      position: relative;
+      height: auto;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .form-signin .form-control:focus {
+      z-index: 2;
+    }
+
+    .form-signin input[type="email"] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <form class="form-signin" method="post" action="login">
+      <h3 class="form-signin-heading">请登录</h3> {% if err %}
+      <div class="alert alert-danger" role="alert">{{ err }}</div>
+      {% end %}
+      <input type="text" class="form-control" name="username" id="inputUserName" placeholder="用户名">
+      <input type="password" class="form-control" name="password" id="inputPassword" placeholder="密码">
+      <button type="submit" class="btn btn-primary btn-block">登录</button>
+    </form>
+  </div>
 </body>
+<script src="{{ static_url('jquery-3.2.1.min.js') }}"></script>
+<script src="{{ static_url('bootstrap-3.3.7.min.js') }}"></script>
+
 </html>
